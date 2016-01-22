@@ -1,0 +1,109 @@
+﻿@{
+    ViewBag.Title = "New Mold";
+}
+
+@*<form id="formNew" name="formNew" method="post" action="">
+    <div class="row-fluid">
+        <div class="span4">
+            <div class="form-horizontal">
+                <!-- Text input-->
+                <div class="control-group">
+                  <label class="control-label" for="txtMoldCode">Mold Code : </label>
+                  <div class="controls">
+                    <input id="txtMoldCode" name="txtMoldCode" type="text" placeholder="placeholder" class="input-medium">
+                  </div>
+                </div>
+            </div>
+        </div>
+        <div class="span4">
+            <div class="form-horizontal">
+                <!-- Text input-->
+                <div class="control-group">
+                  <label class="control-label" for="textinput">Text Input</label>
+                  <div class="controls">
+                    <input id="textinput" name="textinput" type="text" placeholder="placeholder" class="input-medium">
+                  </div>
+                </div>
+            </div>
+        </div>
+        <div class="span4">
+            <div class="form-horizontal">
+                <!-- Select Basic -->
+                <div class="control-group">
+                  <label class="control-label" for="selMoldType">Mold Type :</label>
+                  <div class="controls">
+                    <select id="selMoldType" name="selMoldType" class="input-medium">
+                      <option>Option one</option>
+                      <option>Option two</option>
+                    </select>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>*@
+
+<form>
+    <table class="table" style="width:70%;">
+        <thead>
+            <tr>
+                <th>Mold Code</th>
+                <th>Chrome</th>
+                <th>Mold Type</th>
+                <th>Location</th>
+                <th>Mold Dimension</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><input type="text" id="txtMCode" name="txtMCode" class="input-medium" data-validation="required" /></td>
+                <td><select id="selChrome" name="selChrome" class="input-medium">
+                        <option>----</option>
+                        <option>Yes</option>
+                        <option>No</option>
+                    </select></td>
+                <td><select id="selMType" name="selMType" class="input-medium">
+                        <option>----</option>
+                        <option>Jig</option>
+                        <option>Mold</option>
+                    </select></td>
+                <td><select id="selLoc" name="selLoc" class="input-medium">
+                        <option>----</option>
+                        <option>OSP1</option>
+                        <option>OSP2</option>
+                    </select></td>
+                <td><input type="text" id="txtMold" name="txtMold" class="input-medium" data-validation="required" /></td>
+                <td><button type="submit" class="btn btn-success">Submit</button></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="table" style="width:55%;">
+        <tr>
+            <th>Date</th>
+            <th>Cavity no.</th>
+            <th>Q'ty</th>
+            <th>Total</th>
+        </tr>
+        <tr>
+            <td><input type="text" class="input-medium" /></td>
+            <td><input type="text" class="input-medium" /></td>
+            <td><input type="text" class="input-medium" /></td>
+            <td><input type="text" class="input-medium" /></td>
+            @*<td><input type="button" class="btn btn-primary" value="Add" /></td>*@
+        </tr>
+        <tr>
+            <th>Description</th>
+            <th>Source</th>
+            <th>Check by</th>
+            <th>Result</th>
+        </tr>
+        <tr>
+            <td><input type="text" class="input-medium" /></td>
+            <td><input type="text" class="input-medium" /></td>
+            <td><input type="text" class="input-medium" /></td>
+            <td><input type="text" class="input-medium" /></td>
+        </tr>
+    </table>
+</form>

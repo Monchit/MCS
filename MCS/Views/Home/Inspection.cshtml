@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "Inspection";
+}
+
+<style type="text/css">
+    /*fix jTable*/
+    span.jtable-goto-page select, span.jtable-page-size-change select {
+        height: 25px;
+        width: 60px;
+        padding: 2px 2px;
+        margin-bottom:auto;
+    }
+    div.jtable-main-container table.jtable thead th {
+        text-align: center;
+    }
+    div.jtable-main-container > table.jtable > tbody > tr.jtable-data-row > td {
+        text-align: center;
+    }
+</style>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#jTableInsp').jtable({
+            title: 'Inspection Master',
+            paging: true, //Enable paging
+            pageSize: 10, //Set page size (default: 10)
+            sorting: true, //Enable sorting
+            selecting: true, //Enable selecting
+            defaultSorting: 'inspection_id', //Set default sorting
+            actions: {
+                listAction: '@Url.Action("InspList","Home")',
+                @*deleteAction: '@Url.Action("DeleteInsp","Home")',*@
+                updateAction: '@Url.Action("UpdateInsp","Home")',
+                createAction: '@Url.Action("CreateInsp","Home")'
+            },
+            fields: {
+                inspection_id: { title: 'ID', key: true, edit: false, width: '15%' },
+                inspection_name: { title: 'Name', create: true, edit: true, width: '65%' },
+                active: { title: 'Active', create: false, edit: true, width: '20%', options: { '0': 'No', '1': 'Yes' } }
+            }
+        });
+
+        //Load student list from server
+        $('#jTableInsp').jtable('load');
+
+    });
+</script>
+
+<div id="jTableInsp" class="text-center" style="width: 50%;"></div>

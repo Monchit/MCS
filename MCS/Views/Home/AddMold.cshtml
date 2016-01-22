@@ -1,0 +1,98 @@
+﻿@{
+    ViewBag.Title = "Add Mold";
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.validate({
+            form: '#formAddMold',
+            validateOnBlur: false,
+            showHelpOnFocus: false,
+            addSuggestions: false,
+            errorMessagePosition: 'top',
+            scrollToTopOnError: false // Set this property to true if you have a long form
+        });
+    });
+</script>
+
+<form class="form-horizontal" id="formAddMold" name="formAddMold" method="post" action="@Url.Action("CreateMold","Home")">
+<fieldset>
+
+<!-- Form Name -->
+<legend>Add New Mold</legend>
+
+<!-- Text input-->
+<div class="control-group">
+  <label class="control-label" for="moldcode">Mold Code :</label>
+  <div class="controls">
+    <input id="moldcode" name="moldcode" type="text" placeholder="Mold Code" class="input-large" data-validation="required">
+  </div>
+</div>
+
+    <!-- Text input-->
+<div class="control-group">
+  <label class="control-label" for="itemcode">Item Code :</label>
+  <div class="controls">
+    <input id="itemcode" name="itemcode" type="text" placeholder="Item Code" class="input-large">
+  </div>
+</div>
+
+<!-- Select Basic -->
+<div class="control-group">
+  <label class="control-label" for="moldtype">Mold Type :</label>
+  <div class="controls">
+    <select id="moldtype" name="moldtype" class="input-medium" data-validation="required">
+        <option value="">----</option>
+        @foreach (var item in ViewBag.MoldType)
+        {
+        <option value="@item.mold_type">@item.mold_type_name</option>
+        }
+    </select>
+  </div>
+</div>
+
+<!-- Select Basic -->
+<div class="control-group">
+  <label class="control-label" for="unit">Unit :</label>
+  <div class="controls">
+    <select id="unit" name="unit" class="input-medium" data-validation="required">
+        <option value="">----</option>
+        <option>Set</option>
+        <option>Cavity</option>
+    </select>
+  </div>
+</div>
+
+<!-- Select Basic -->
+<div class="control-group">
+  <label class="control-label" for="location">Location :</label>
+  <div class="controls">
+    <select id="location" name="location" class="input-medium" data-validation="required">
+        <option value="">----</option>
+        <option>OSP1</option>
+        <option>OSP2</option>
+        <option>BPK3</option>
+        <option>RSP</option>
+    </select>
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="control-group">
+  <label class="control-label" for="molddiameter">Mold Diameter</label>
+  <div class="controls">
+    <input id="molddiameter" name="molddiameter" type="text" placeholder="Mold Diameter" class="input-large">
+  </div>
+</div>
+
+<!-- Button (Double) -->
+<div class="control-group">
+  <label class="control-label" for="btn_submit"></label>
+  <div class="controls">
+    <button id="btn_submit" name="btn_submit" class="btn btn-primary" type="submit">Submit</button>
+    <button id="btn_clear" name="btn_clear" class="btn btn-danger" type="reset">Clear</button>
+  </div>
+</div>
+
+</fieldset>
+</form>

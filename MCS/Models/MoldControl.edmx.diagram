@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="f1d2472bb63846b98a8c5a83c3c4ce77" Name="Diagram1">
+        <EntityTypeShape EntityType="MoldControlModel.td_inspection" Width="1.5" PointX="2.0940433936631511" PointY="9.0226739687019375" />
+        <EntityTypeShape EntityType="MoldControlModel.td_issue" Width="1.5" PointX="11.093900195832317" PointY="29.412912397372029" />
+        <EntityTypeShape EntityType="MoldControlModel.td_ledger" Width="1.5" PointX="9.7463829059835447" PointY="3.7533862906291087" />
+        <EntityTypeShape EntityType="MoldControlModel.td_mold" Width="1.5" PointX="6.3443072728553354" PointY="19.857509681888629" />
+        <EntityTypeShape EntityType="MoldControlModel.td_tran" Width="1.5" PointX="9.0012391512287966" PointY="19.935550862893255" />
+        <EntityTypeShape EntityType="MoldControlModel.tm_inspection" Width="1.5" PointX="3.8048682528570614" PointY="13.961307338420911" />
+        <EntityTypeShape EntityType="MoldControlModel.tm_mold_type" Width="1.5" PointX="7.4859147013565135" PointY="24.145256783880878" />
+        <EntityTypeShape EntityType="MoldControlModel.tm_status" Width="1.5" PointX="0.56351210389449824" PointY="23.522651698218031" />
+        <AssociationConnector Association="MoldControlModel.FK_td_inspection_td_ledger" />
+        <AssociationConnector Association="MoldControlModel.FK_td_inspection_tm_inspection" />
+        <AssociationConnector Association="MoldControlModel.FK_td_ledger_td_mold" />
+        <AssociationConnector Association="MoldControlModel.FK_td_mold_tm_mold_type" />
+        <AssociationConnector Association="MoldControlModel.FK_td_tran_tm_status" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,324 @@
+﻿@model MCS.Models.td_mold
+@{
+    ViewBag.Title = "Ledger";
+}
+<style type="text/css">
+    /*fix jTable*/
+    span.jtable-goto-page select, span.jtable-page-size-change select {
+        height: 25px;
+        width: 60px;
+        padding: 2px 2px;
+        margin-bottom:auto;
+    }
+    div.jtable-main-container table.jtable thead th {
+        text-align: center;
+    }
+    div.jtable-main-container > table.jtable > tbody > tr.jtable-data-row > td {
+        text-align: center;
+    }
+</style>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#jTableLedger').jtable({
+            title: 'Ledger',
+            paging: true, //Enable paging
+            pageSize: 10, //Set page size (default: 10)
+            sorting: true, //Enable sorting
+            selecting: true, //Enable selecting
+            multiselect: false, //Allow multiple selecting
+            defaultSorting: 'receive_date', //Set default sorting
+            actions: {
+                listAction: '@Url.Action("LedgerList","Ledger")',
+                @*updateAction: '@Url.Action("UpdateLedger","Ledger")'
+                createAction: '@Url.Action("CreateLedger","Ledger")'*@
+            },
+            //toolbar: {
+            //    items: [{
+            //        tooltip: 'Add Ledger',
+            //        //icon: '../Scripts/jtable/themes/lightcolor/add.png',
+            //        text: 'Add Ledger',
+            //        click: function () {
+                        
+            //        }
+            //    }]
+            //},
+            fields: {
+                mold_code: { title: 'Mold Code', list: false },
+                cavity_no: { title: 'Cavity No.' },
+                receive_date: { title: 'Receive Date', type: 'date', displayFormat: 'dd-mm-yy' },
+                qty: { title: 'Qty' },
+                description: { title: 'Description' },
+                source: { title: 'Source' },
+                result: { title: 'Result' },
+                invoice_no: { title: 'Invoice No.' },
+                price: { title: 'Price' },
+                pic_code: { title: 'Pic Code', 
+                    display: function (data) { 
+                        return '<a href="' + data.record.pic_code + '" class="gal"><i class="icon-camera"></i></a>';
+                    }
+                },
+                pic_mold: { title: 'Pic Mold',
+                    display: function (data) {
+                        return '<a href="' + data.record.pic_mold + '" class="gal"><i class="icon-camera"></i></a>';
+                    }
+                },
+                status_id: { title: 'Status' }
+            }
+        });
+
+        $('#jTableLedger').jtable('load', {
+            mold_code: $('#moldcode').val()
+        });
+
+        $.validate({
+            form: '#formLedger',
+            modules: 'date, security, file',
+            validateOnBlur: false,
+            showHelpOnFocus: false,
+            addSuggestions: false,
+            errorMessagePosition: 'top',
+            scrollToTopOnError: false // Set this property to true if you have a long form
+        });
+
+        //Datepicker Setting
+        $(".datepicker").datepicker({
+            dateFormat: 'dd/mm/yy'
+            //showOtherMonths: true,
+            //selectOtherMonths: true,
+            //showButtonPanel: true,
+            //minDate: new Date()//set minDate is today
+        });
+
+        $('a.gal').colorbox({ maxHeight: "600px" });
+
+        $('#divInsp').dialog({
+            autoOpen: false,
+            width: 500,//'auto',
+            height: 'auto',
+            modal: true,
+            show: {
+                effect: "clip",
+                duration: 500
+            },
+            hide: {
+                effect: "clip",
+                duration: 500
+            }
+        });
+
+        $('#divadd').dialog({
+            autoOpen: false,
+            width: 600,//'auto',
+            height: 'auto',
+            modal: true,
+            show: {
+                effect: "clip",
+                duration: 500
+            },
+            hide: {
+                effect: "clip",
+                duration: 500
+            }
+        });
+
+        $(document).on("click", ".ShowInsp", function (e) {
+            e.preventDefault();
+            var obj = new Object();
+            obj.mold_code = $(this).attr('data-code');
+            obj.cavity = $(this).attr('data-cav');
+            var remote = "@Url.Action("_ShowInspection", "Home")";
+            $.get(remote, obj, function (data) {
+                $("#divInsp").html(data);
+                $("#divInsp").dialog("open");
+                return false;
+            });
+        });
+    });
+</script>
+
+<h4>Mold Detail</h4>
+<table class="table table-bordered">
+    <tr class="info">
+        <td><strong>Mold Code : </strong>@Html.DisplayFor(m => m.mold_code)
+            <input type="hidden" id="moldcode" name="moldcode" value="@Model.mold_code" /></td>
+        <td><strong>Item Code : </strong>@Html.DisplayFor(m => m.item_code)</td>
+        <td><strong>Mold Type : </strong>@Html.DisplayFor(m => m.tm_mold_type.mold_type_name)</td>
+        <td><strong>Unit : </strong>@Html.DisplayFor(m => m.unit)</td>
+        <td><strong>Location : </strong>@Html.DisplayFor(m => m.location)</td>
+        <td><strong>Mold Diameter : </strong>@Html.DisplayFor(m => m.mold_diameter)</td>
+    </tr>
+</table>
+
+<div id="jTableLedger"></div>
+
+@*<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#divadd">Ledger</button>*@
+
+<div id="divadd">
+    <form class="form-horizontal" id="formLedger" name="formLedger" method="post" action="@Url.Action("CreateLedger")" enctype="multipart/form-data">
+    <fieldset>
+    
+    <!-- Form Name -->
+    <legend>Ledger</legend>
+
+    <div class="row-fluid">
+        <div class="span6">
+            <!-- Text input-->
+            <div class="control-group">
+              <label class="control-label" for="adddate">Date :</label>
+              <div class="controls">
+                
+                <input id="adddate" name="adddate" type="text" class="datepicker input-medium" data-validation="date" data-validation-format="dd/mm/yyyy" placeholder="31/12/2015">
+              </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="control-group">
+              <label class="control-label" for="cavityno">Cavity No. :</label>
+              <div class="controls">
+                <input id="cavityno" name="cavityno" type="text" placeholder="Cavity No." class="input-medium" data-validation="required">
+              </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="control-group">
+              <label class="control-label" for="qty">Q'ty :</label>
+              <div class="controls">
+                <input id="qty" name="qty" type="text" placeholder="Q'ty" class="input-medium" data-validation="number" data-validation-allowing="range[1;100]">
+              </div>
+            </div>
+        
+            <!-- Text input-->
+            <div class="control-group">
+              <label class="control-label" for="invoiceno">Invoice No. :</label>
+              <div class="controls">
+                <input id="invoiceno" name="invoiceno" type="text" placeholder="Invoice No." class="input-medium" data-validation="required">
+              </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="control-group">
+              <label class="control-label" for="price">Price (Yen):</label>
+              <div class="controls">
+                <input id="price" name="price" type="text" placeholder="Price" class="input-medium">
+              </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="control-group">
+              <label class="control-label" for="description">Description :</label>
+              <div class="controls">
+                <input id="description" name="description" type="text" placeholder="Description" class="input-xlarge" data-validation="required">
+              </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="control-group">
+              <label class="control-label" for="source">Source :</label>
+              <div class="controls">
+                <input id="source" name="source" type="text" placeholder="Source" class="input-xlarge" data-validation="required">
+              </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="control-group">
+              <label class="control-label" for="result">Result :</label>
+              <div class="controls">
+                <select id="result" name="result" class="input-small" data-validation="required">
+                    <option value="">----</option>
+                    <option>OK</option>
+                    <option>NG</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- File Button --> 
+            <div class="control-group">
+              <label class="control-label" for="piccode">Picture Mold Code :</label>
+              <div class="controls">
+                <input id="piccode" name="piccode" class="input-file" type="file" data-validation="mime" data-validation-allowing="jpg, png, gif">
+              </div>
+            </div>
+
+            <!-- File Button --> 
+            <div class="control-group">
+              <label class="control-label" for="picmold">Picture Mold :</label>
+              <div class="controls">
+                <input id="picmold" name="picmold" class="input-file" type="file" data-validation="mime" data-validation-allowing="jpg, png, gif">
+              </div>
+            </div>
+
+            <!-- Button (Double) -->
+            <div class="control-group">
+              <label class="control-label" for="btn_submit"></label>
+              <div class="controls">
+                <button id="btn_submit" name="btn_submit" type="submit" class="btn btn-primary">Submit</button>
+                <button id="btn_clear" name="btn_clear" type="reset" class="btn btn-danger">Clear</button>
+              </div>
+            </div>
+        </div>
+
+        @*<div class="span6">
+            <table class="table table-condensed">
+                <thead>
+                    <tr>
+                        <th>Inspection Item</th>
+                        <th>Result</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in ViewBag.TM_Inspection)
+                    {
+                    <tr>
+                        <td>@item.inspection_name<input type="hidden" name="insKey" value="@item.inspection_id" /></td>
+                        <td><select name="insResult" class="input-small">
+                                <option>OK</option>
+                                <option>NG</option>
+                            </select></td>
+                        <td><input type="text" name="insDesc" class="input-large" /></td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>*@
+    </div>
+
+    </fieldset>
+    </form>
+</div>
+
+@*<h4>Issue Record</h4>
+<table class="table table-bordered table-condensed">
+    <thead>
+        <tr>
+            <th>Date out</th>
+            <th>M/C No.</th>
+            <th>Cavity No.</th>
+            <th>Q'ty</th>
+            <th>Appearance</th>
+            <th>Issue by</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            var i = 0;
+            foreach (var item in ViewBag.TD_Issue)
+            {
+            <tr>
+                <td>@item.cavity_no</td>
+                <td>@item.machine_no</td>
+                <td>@item.date_out</td>
+                <td>@item.qty</td>
+                <td>@item.appearance</td>
+                <td>@item.date_in</td>
+            </tr>
+                i++;
+            }
+            
+            if(i == 0) {<tr><td colspan="6" style="text-align:center;">No data available !</td></tr>}
+        }
+    </tbody>
+</table>*@
+
+<div id="divInsp" title="Inspection"></div>

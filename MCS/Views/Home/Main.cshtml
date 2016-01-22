@@ -1,0 +1,115 @@
+﻿@{
+    ViewBag.Title = "Main";
+}
+<style type="text/css">
+    /*fix jTable*/
+    span.jtable-goto-page select, span.jtable-page-size-change select {
+        height: 25px;
+        width: 60px;
+        padding: 2px 2px;
+        margin-bottom:auto;
+    }
+    div.jtable-main-container table.jtable thead th {
+        text-align: center;
+    }
+    div.jtable-main-container > table.jtable > tbody > tr.jtable-data-row > td {
+        text-align: center;
+    }
+</style>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#jTableMold').jtable({
+            title: 'Mold',
+            paging: true, //Enable paging
+            pageSize: 10, //Set page size (default: 10)
+            sorting: true, //Enable sorting
+            selecting: true, //Enable selecting
+            multiselect: false, //Allow multiple selecting
+            defaultSorting: 'mold_code', //Set default sorting
+            actions: {
+                updateAction: '@Url.Action("UpdateMold","Home")',
+                listAction: '@Url.Action("MoldList","Home")'
+            },
+            fields: {
+                mold_code: {
+                    title: 'Mold Code', key: true, create: true,
+                    display: function (data) {
+                        return $('<a href="@Url.Action("AddLedger")?mold_code=' + data.record.mold_code + '">' + data.record.mold_code + '</a>');
+                    }
+                },
+                item_code: { title: 'Item Code' },
+                mold_type: { title: 'Mold Type', options: '@Url.Action("GetMoldType","Home")' },
+                unit: { title: 'Unit', options: ['Set','Cavity'] },
+                location: { title: 'Location', options: ['OSP1', 'OSP2', 'BPK3', 'RSP'] },
+                mold_diameter: { title: 'Mold Diameter' }
+            }
+        });
+        
+        $('#jTableMold').jtable('load');
+        //Re-load records when user click 'load records' button.
+        $('#btn_search').click(function (e) {
+            e.preventDefault();
+            $('#jTableMold').jtable('load', {
+                mold_code: $('#search_moldcode').val(),
+                item_code: $('#search_itemcode').val(),
+                mold_type: $('#search_type').val(),
+                unit: $('#search_unit').val(),
+                location: $('#search_location').val(),
+                mold_diameter: $('#search_diameter').val()
+            });
+        });
+
+        @*$(document).on("click", ".moldcode", function (event) {
+            var id = $(this).attr('data-mold');
+            var remote = "@Url.Action("_ShowDetail")?id=" + id;
+            $.get(remote, function (data) {
+                $("#divMainDetail").html(data);
+                $("#divMainDetail").dialog("open");
+                return false;
+            });
+        });*@
+    });
+</script>
+
+<table class="table table-condensed" style="width:auto;">
+    <thead>
+        <tr>
+            <th>Mold Code</th>
+            <th>Item Code</th>
+            <th>Mold Type</th>
+            <th>Unit</th>
+            <th>Location</th>
+            <th>Mold Diameter</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><input type="text" id="search_moldcode" name="search_moldcode" class="input-medium" /></td>
+            <td><input type="text" id="search_itemcode" name="search_itemcode" class="input-medium" /></td>
+            <td><select id="search_type" name="search_type" class="input-medium">
+                    <option value="">--All--</option>
+                    @foreach (var item in ViewBag.SearchMoldType)
+                    {
+                    <option value="@item.mold_type">@item.mold_type_name</option>
+                    }
+                </select></td>
+            <td><select id="search_unit" name="search_unit" class="input-small">
+                    <option value="">--All--</option>
+                    <option>Set</option>
+                    <option>Cavity</option>
+                </select></td>
+            <td><select id="search_location" name="search_location" class="input-small">
+                    <option value="">--All--</option>
+                    <option>OSP1</option>
+                    <option>OSP2</option>
+                    <option>BPK3</option>
+                    <option>RSP</option>
+                </select></td>
+            <td><input type="text" id="search_diameter" name="search_diameter" class="input-medium" /></td>
+            <td><button type="submit" id="btn_search" name="btn_search" class="btn btn-inverse">Search</button></td>
+        </tr>
+    </tbody>
+</table>
+
+<div id="jTableMold"></div>

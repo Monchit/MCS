@@ -1,0 +1,320 @@
+﻿@model MCS.Models.td_mold
+@{
+    ViewBag.Title = "Add Ledger";
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#dialogAddLedger').dialog({
+            autoOpen: false,
+            width: 550,//'auto',
+            height: 'auto',
+            modal: true,
+            show: { effect: "drop", duration: 500 },
+            hide: { effect: "drop", duration: 500 }
+        });
+
+        $('#dialogAddInsp').dialog({
+            autoOpen: false,
+            width: 550,//'auto',
+            height: 'auto',
+            modal: true,
+            show: { effect: "drop", duration: 500 },
+            hide: { effect: "drop", duration: 500 }
+        });
+
+        $('#divInsp').dialog({
+            autoOpen: false,
+            width: 500,//'auto',
+            height: 'auto',
+            modal: true,
+            show: { effect: "drop", duration: 500 },
+            hide: { effect: "drop", duration: 500 }
+        });
+
+        $.validate({
+            form: '#formAddLedger, #formAddInspection',
+            modules: 'date, security, file',
+            validateOnBlur: false,
+            showHelpOnFocus: false,
+            addSuggestions: false,
+            errorMessagePosition: 'top',
+            scrollToTopOnError: false // Set this property to true if you have a long form
+        });
+
+        //Datepicker Setting
+        $(".datepicker").datepicker({
+            dateFormat: 'dd/mm/yy'
+            //showOtherMonths: true,
+            //selectOtherMonths: true,
+            //showButtonPanel: true,
+            //minDate: new Date()//set minDate is today
+        });
+
+        $('a.gal').colorbox({ maxHeight: "600px", maxWidth: "800px" });
+        
+        $("#btnAddLedger").click(function () {
+            $("#dialogAddLedger").dialog("open");
+        });
+
+        $(document).on("click", ".btnAddInsp", function (e) {
+            $("#hdcavityno").val($(this).attr('data-cav'));
+            $("#dialogAddInsp").dialog("open");
+        });
+
+        $(document).on("click", ".ShowInsp", function (e) {
+            e.preventDefault();
+            var obj = new Object();
+            obj.mold_code = $(this).attr('data-code');
+            obj.cavity = $(this).attr('data-cav');
+            var remote = "@Url.Action("_ShowInspection", "Home")";
+            $.get(remote, obj, function (data) {
+                $("#divInsp").html(data);
+                $("#divInsp").dialog("open");
+                return false;
+            });
+        });
+
+        $(document).on("click", ".OpIssue", function (e) {
+
+        });
+    });
+</script>
+
+<h4>Mold Detail</h4>
+<table class="table table-bordered">
+    <tr class="info">
+        <td><strong>Mold Code : </strong>@Html.DisplayFor(m => m.mold_code)</td>
+        <td><strong>Item Code : </strong>@Html.DisplayFor(m => m.item_code)</td>
+        <td><strong>Mold Type : </strong>@Html.DisplayFor(m => m.tm_mold_type.mold_type_name)</td>
+        <td><strong>Unit : </strong>@Html.DisplayFor(m => m.unit)</td>
+        <td><strong>Location : </strong>@Html.DisplayFor(m => m.location)</td>
+        <td><strong>Mold Diameter : </strong>@Html.DisplayFor(m => m.mold_diameter)</td>
+    </tr>
+</table>
+
+<h4 style="text-align:left;float:left;">Ledger Detail</h4>
+<div style="text-align:right;float:right;"><button id="btnAddLedger" type="button" class="btn btn-small btn-info"><i class="icon-plus icon-white"></i> Add Ledger</button></div>
+
+<table class="table table-bordered table-condensed">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Cavity No.</th>
+            <th>Q'ty</th>
+            <th>Description</th>
+            <th>Source</th>
+            <th>Result</th>
+            <th>Mold Code</th>
+            <th>Mold</th>
+            <th>Inspection</th>
+            <th>Issue</th>
+            <th>Return</th>
+            <th>Remedy</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            var ledger = Model.td_ledger;
+            if (ledger.Count != 0)
+            {
+                foreach (var item in ledger.OrderBy(o => o.receive_date))
+                {
+                <tr>
+                    <td>@item.receive_date.ToString("dd/MM/yyyy")</td>
+                    <td>@item.cavity_no</td>
+                    <td>@item.qty</td>
+                    <td>@item.description</td>
+                    <td>@item.source</td>
+                    <td>@item.result</td>
+                    <td style="text-align:center;"><a href="@Url.Content(item.pic_code)" class="gal"><i class="icon-camera"></i></a></td>
+                    <td style="text-align:center;"><a href="@Url.Content(item.pic_mold)" class="gal"><i class="icon-camera"></i></a></td>
+                    <td style="text-align:center;">
+                        @if(item.td_inspection.Count() > 0){
+                            <a class="ShowInsp" data-code="@item.mold_code" data-cav="@item.cavity_no" href=""><i class="icon-list-alt"></i></a>
+                        }
+                        else{
+                            <a class="btnAddInsp" data-code="@item.mold_code" data-cav="@item.cavity_no" href=""><i class="icon-plus"></i></a>
+                        }
+                    </td>
+                    <td style="text-align:center;"><a class="OpIssue" data-code="@item.mold_code" data-cav="@item.cavity_no" href="#"><i class="icon-minus"></i></a></td>
+                    <td style="text-align:center;"><a class="OpReturn" data-code="@item.mold_code" data-cav="@item.cavity_no" href="#"><i class="icon-plus"></i></a></td>
+                    <td style="text-align:center;"><a class="OpRemedy" data-code="@item.mold_code" data-cav="@item.cavity_no" href="#"><i class="icon-wrench"></i></a></td>
+                </tr>
+                }
+            }
+            else
+            {
+                <tr><td colspan="12" style="text-align:center;">No data available !</td></tr>
+            }
+        }
+    </tbody>
+</table>
+
+<h4>Issue Record</h4>
+<table data-toggle="table" data-search="true" data-pagination="true">
+    <thead>
+        <tr>
+            <th>Date out</th>
+            <th>M/C No.</th>
+            <th>Cavity No.</th>
+            <th>Q'ty</th>
+            <th>Appearance</th>
+            <th>Issue by</th>
+        </tr>
+    </thead>
+    <tbody>
+        @*@{
+            var i = 0;
+            foreach (var item in ViewBag.TD_Issue)
+            {
+            <tr>
+                <td>@item.cavity_no</td>
+                <td>@item.machine_no</td>
+                <td>@item.date_out</td>
+                <td>@item.qty</td>
+                <td>@item.appearance</td>
+                <td>@item.date_in</td>
+            </tr>
+                i++;
+            }
+            
+            if(i == 0) {<tr><td colspan="6" style="text-align:center;">No data available !</td></tr>}
+        }*@
+    </tbody>
+</table>
+
+<div id="divInsp" title="Inspection"></div>
+
+<div id="dialogAddInsp" title="Add Inspection">
+    <form id="formAddInspection" name="formAddInspection" method="post" action="@Url.Action("CreateInspection","Home")">
+        <table class="table table-condensed">
+            <thead>
+                <tr>
+                    <th>Inspection Item</th>
+                    <th>Result</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in ViewBag.TM_Inspection)
+                {
+                <tr>
+                    <td>@item.inspection_name<input type="hidden" name="inspKey" value="@item.inspection_id" /></td>
+                    <td><select name="inspResult" class="input-small">
+                            <option>OK</option>
+                            <option>NG</option>
+                        </select></td>
+                    <td><input type="text" name="inspDesc" class="input-large" /></td>
+                </tr>
+                }
+            </tbody>
+        </table>
+        <div class="text-center">
+            <input type="hidden" name="hdmoldcode" value="@Model.mold_code" />
+            <input type="hidden" name="hdcavityno" id="hdcavityno" />
+            <button id="inspSubmit" name="inspSubmit" type="submit" class="btn btn-primary">Submit</button>
+            <button id="inspClear" name="inspClear" type="reset" class="btn btn-danger">Clear</button>
+        </div>
+    </form>
+</div>
+
+<div id="dialogAddLedger" title="Add Ledger">
+    <form class="form-horizontal" id="formAddLedger" name="formLedger" method="post" action="@Url.Action("CreateLedger", "Home")" enctype="multipart/form-data">
+
+        <!-- Text input-->
+        <div class="control-group">
+            <label class="control-label" for="cavityno">Cavity No. :</label>
+            <div class="controls">
+            <input id="cavityno" name="cavityno" type="text" placeholder="Cavity No." class="input-medium" data-validation="required">
+            </div>
+        </div>
+
+        <!-- Text input-->
+        <div class="control-group">
+            <label class="control-label" for="adddate">Date :</label>
+            <div class="controls">
+            <input type="hidden" name="moldcode" value="@Model.mold_code" />
+            <input id="adddate" name="adddate" type="text" class="datepicker input-medium" data-validation="date" data-validation-format="dd/mm/yyyy" placeholder="31/12/2015">
+            </div>
+        </div>
+
+        <!-- Text input-->
+        <div class="control-group">
+            <label class="control-label" for="qty">Q'ty :</label>
+            <div class="controls">
+            <input id="qty" name="qty" type="text" placeholder="Q'ty" class="input-medium" data-validation="number" data-validation-allowing="range[1;100]">
+            </div>
+        </div>
+        
+        <!-- Text input-->
+        <div class="control-group">
+            <label class="control-label" for="invoiceno">Invoice No. :</label>
+            <div class="controls">
+            <input id="invoiceno" name="invoiceno" type="text" placeholder="Invoice No." class="input-medium" data-validation="required">
+            </div>
+        </div>
+
+        <!-- Text input-->
+        <div class="control-group">
+            <label class="control-label" for="price">Price (Yen):</label>
+            <div class="controls">
+            <input id="price" name="price" type="text" placeholder="Price" class="input-medium">
+            </div>
+        </div>
+
+        <!-- Text input-->
+        <div class="control-group">
+            <label class="control-label" for="description">Description :</label>
+            <div class="controls">
+            <input id="description" name="description" type="text" placeholder="Description" class="input-xlarge" data-validation="required">
+            </div>
+        </div>
+
+        <!-- Text input-->
+        <div class="control-group">
+            <label class="control-label" for="source">Source :</label>
+            <div class="controls">
+            <input id="source" name="source" type="text" placeholder="Source" class="input-xlarge" data-validation="required">
+            </div>
+        </div>
+
+        <!-- Text input-->
+        <div class="control-group">
+            <label class="control-label" for="result">Result :</label>
+            <div class="controls">
+            <select id="result" name="result" class="input-small" data-validation="required">
+                <option value="">----</option>
+                <option>OK</option>
+                <option>NG</option>
+            </select>
+            </div>
+        </div>
+
+        <!-- File Button --> 
+        <div class="control-group">
+            <label class="control-label" for="piccode">Picture Mold Code :</label>
+            <div class="controls">
+            <input id="piccode" name="piccode" class="input-file" type="file" data-validation="mime" data-validation-allowing="jpg, png, gif">
+            </div>
+        </div>
+
+        <!-- File Button --> 
+        <div class="control-group">
+            <label class="control-label" for="picmold">Picture Mold :</label>
+            <div class="controls">
+            <input id="picmold" name="picmold" class="input-file" type="file" data-validation="mime" data-validation-allowing="jpg, png, gif">
+            </div>
+        </div>
+
+        <!-- Button (Double) -->
+        <div class="control-group">
+            <label class="control-label" for="btn_submit"></label>
+            <div class="controls">
+            <button id="ledgerSubmit" name="ledgerSubmit" type="submit" class="btn btn-primary">Submit</button>
+            <button id="ledgerClear" name="ledgerClear" type="reset" class="btn btn-danger">Clear</button>
+            </div>
+        </div>
+    </form>
+</div>

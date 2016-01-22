@@ -1,0 +1,202 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MoldControlModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="MoldControlModelStoreContainer">
+    <EntitySet Name="td_inspection" EntityType="MoldControlModel.Store.td_inspection" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="td_issue" EntityType="MoldControlModel.Store.td_issue" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="td_ledger" EntityType="MoldControlModel.Store.td_ledger" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="td_mold" EntityType="MoldControlModel.Store.td_mold" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="td_tran" EntityType="MoldControlModel.Store.td_tran" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tm_inspection" EntityType="MoldControlModel.Store.tm_inspection" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tm_mold_type" EntityType="MoldControlModel.Store.tm_mold_type" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tm_status" EntityType="MoldControlModel.Store.tm_status" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_td_inspection_td_ledger" Association="MoldControlModel.Store.FK_td_inspection_td_ledger">
+      <End Role="td_ledger" EntitySet="td_ledger" />
+      <End Role="td_inspection" EntitySet="td_inspection" />
+    </AssociationSet>
+    <AssociationSet Name="FK_td_inspection_tm_inspection" Association="MoldControlModel.Store.FK_td_inspection_tm_inspection">
+      <End Role="tm_inspection" EntitySet="tm_inspection" />
+      <End Role="td_inspection" EntitySet="td_inspection" />
+    </AssociationSet>
+    <AssociationSet Name="FK_td_ledger_td_mold" Association="MoldControlModel.Store.FK_td_ledger_td_mold">
+      <End Role="td_mold" EntitySet="td_mold" />
+      <End Role="td_ledger" EntitySet="td_ledger" />
+    </AssociationSet>
+    <AssociationSet Name="FK_td_mold_tm_mold_type" Association="MoldControlModel.Store.FK_td_mold_tm_mold_type">
+      <End Role="tm_mold_type" EntitySet="tm_mold_type" />
+      <End Role="td_mold" EntitySet="td_mold" />
+    </AssociationSet>
+    <AssociationSet Name="FK_td_tran_tm_status" Association="MoldControlModel.Store.FK_td_tran_tm_status">
+      <End Role="tm_status" EntitySet="tm_status" />
+      <End Role="td_tran" EntitySet="td_tran" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="td_inspection">
+    <Key>
+      <PropertyRef Name="mold_code" />
+      <PropertyRef Name="cavity_no" />
+      <PropertyRef Name="inspection_id" />
+    </Key>
+    <Property Name="mold_code" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="cavity_no" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="inspection_id" Type="tinyint" Nullable="false" />
+    <Property Name="result" Type="bit" Nullable="false" />
+    <Property Name="description" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="td_issue">
+    <Key>
+      <PropertyRef Name="mold_code" />
+      <PropertyRef Name="cavity_no" />
+      <PropertyRef Name="machine_no" />
+    </Key>
+    <Property Name="mold_code" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="cavity_no" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="machine_no" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="date_out" Type="date" />
+    <Property Name="qty" Type="int" />
+    <Property Name="appearance" Type="nvarchar" MaxLength="50" />
+    <Property Name="issue_by" Type="nvarchar" MaxLength="10" />
+    <Property Name="date_in" Type="date" />
+    <Property Name="receive_by" Type="nvarchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="td_ledger">
+    <Key>
+      <PropertyRef Name="mold_code" />
+      <PropertyRef Name="cavity_no" />
+    </Key>
+    <Property Name="mold_code" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="cavity_no" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="receive_date" Type="datetime" Nullable="false" />
+    <Property Name="qty" Type="int" Nullable="false" />
+    <Property Name="description" Type="nvarchar(max)" />
+    <Property Name="source" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="result" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="invoice_no" Type="nvarchar" MaxLength="50" />
+    <Property Name="price" Type="int" />
+    <Property Name="pic_code" Type="nvarchar(max)" />
+    <Property Name="pic_mold" Type="nvarchar(max)" />
+    <Property Name="check_by" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="create_dt" Type="datetime" Nullable="false" />
+    <Property Name="status_id" Type="tinyint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="td_mold">
+    <Key>
+      <PropertyRef Name="mold_code" />
+    </Key>
+    <Property Name="mold_code" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="mold_type" Type="tinyint" Nullable="false" />
+    <Property Name="item_code" Type="nvarchar" MaxLength="50" />
+    <Property Name="location" Type="nvarchar" Nullable="false" MaxLength="10" />
+    <Property Name="mold_diameter" Type="nvarchar" MaxLength="50" />
+    <Property Name="unit" Type="nvarchar" Nullable="false" MaxLength="10" />
+    <Property Name="create_dt" Type="datetime" Nullable="false" />
+    <Property Name="create_by" Type="nvarchar" Nullable="false" MaxLength="10" />
+    <Property Name="update_dt" Type="datetime" />
+    <Property Name="update_by" Type="nvarchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="td_tran">
+    <Key>
+      <PropertyRef Name="mold_code" />
+      <PropertyRef Name="cavity_no" />
+    </Key>
+    <Property Name="mold_code" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="cavity_no" Type="nvarchar" Nullable="false" MaxLength="20" />
+    <Property Name="status_id" Type="tinyint" Nullable="false" />
+    <Property Name="act_dt" Type="datetime" Nullable="false" />
+    <Property Name="act_by" Type="nvarchar" Nullable="false" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="tm_inspection">
+    <Key>
+      <PropertyRef Name="inspection_id" />
+    </Key>
+    <Property Name="inspection_id" Type="tinyint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="inspection_name" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="active" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tm_mold_type">
+    <Key>
+      <PropertyRef Name="mold_type" />
+    </Key>
+    <Property Name="mold_type" Type="tinyint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="mold_type_name" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="active" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tm_status">
+    <Key>
+      <PropertyRef Name="status_id" />
+    </Key>
+    <Property Name="status_id" Type="tinyint" Nullable="false" />
+    <Property Name="status_name" Type="nvarchar" Nullable="false" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK_td_inspection_td_ledger">
+    <End Role="td_ledger" Type="MoldControlModel.Store.td_ledger" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="td_inspection" Type="MoldControlModel.Store.td_inspection" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="td_ledger">
+        <PropertyRef Name="mold_code" />
+        <PropertyRef Name="cavity_no" />
+      </Principal>
+      <Dependent Role="td_inspection">
+        <PropertyRef Name="mold_code" />
+        <PropertyRef Name="cavity_no" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_td_inspection_tm_inspection">
+    <End Role="tm_inspection" Type="MoldControlModel.Store.tm_inspection" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="td_inspection" Type="MoldControlModel.Store.td_inspection" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tm_inspection">
+        <PropertyRef Name="inspection_id" />
+      </Principal>
+      <Dependent Role="td_inspection">
+        <PropertyRef Name="inspection_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_td_ledger_td_mold">
+    <End Role="td_mold" Type="MoldControlModel.Store.td_mold" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="td_ledger" Type="MoldControlModel.Store.td_ledger" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="td_mold">
+        <PropertyRef Name="mold_code" />
+      </Principal>
+      <Dependent Role="td_ledger">
+        <PropertyRef Name="mold_code" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_td_mold_tm_mold_type">
+    <End Role="tm_mold_type" Type="MoldControlModel.Store.tm_mold_type" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="td_mold" Type="MoldControlModel.Store.td_mold" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tm_mold_type">
+        <PropertyRef Name="mold_type" />
+      </Principal>
+      <Dependent Role="td_mold">
+        <PropertyRef Name="mold_type" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_td_tran_tm_status">
+    <End Role="tm_status" Type="MoldControlModel.Store.tm_status" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="td_tran" Type="MoldControlModel.Store.td_tran" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tm_status">
+        <PropertyRef Name="status_id" />
+      </Principal>
+      <Dependent Role="td_tran">
+        <PropertyRef Name="status_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "Mold Type";
+}
+
+<style type="text/css">
+    /*fix jTable*/
+    span.jtable-goto-page select, span.jtable-page-size-change select {
+        height: 25px;
+        width: 60px;
+        padding: 2px 2px;
+        margin-bottom:auto;
+    }
+    div.jtable-main-container table.jtable thead th {
+        text-align: center;
+    }
+    div.jtable-main-container > table.jtable > tbody > tr.jtable-data-row > td {
+        text-align: center;
+    }
+</style>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#jTableMoldType').jtable({
+            title: 'Mold Type Master',
+            paging: true, //Enable paging
+            pageSize: 10, //Set page size (default: 10)
+            sorting: true, //Enable sorting
+            selecting: true, //Enable selecting
+            defaultSorting: 'mold_type', //Set default sorting
+            actions: {
+                listAction: '@Url.Action("MoldTypeList","Home")',
+                @*deleteAction: '@Url.Action("DeleteMoldType","Home")',*@
+                updateAction: '@Url.Action("UpdateMoldType","Home")',
+                createAction: '@Url.Action("CreateMoldType","Home")'
+            },
+            fields: {
+                mold_type: { title: 'Code', key: true, edit: false, width: '20%' },
+                mold_type_name: { title: 'Name', create: true, edit: true, width: '60%' },
+                active: { title: 'Active', create: false, edit: true, width: '20%', options: { '0': 'No', '1': 'Yes' } }
+            }
+        });
+
+        //Load student list from server
+        $('#jTableMoldType').jtable('load');
+
+    });
+</script>
+
+<div id="jTableMoldType" class="text-center" style="width: 50%;"></div>

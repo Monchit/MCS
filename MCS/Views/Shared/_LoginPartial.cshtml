@@ -1,0 +1,7 @@
+﻿@if (Session["MCS_Authen"] != null)
+{
+    <form id="formLogout" name="formLogout" class="navbar-form pull-right" action="@Url.Action("Logout","Home")" method="post">
+        <a class="username"><i class="icon-user icon-white"></i> @Session["MCS_Name"].ToString()</a>
+        <button type="submit" class="btn btn-danger"><i class="icon-off icon-white"></i> Log out</button>
+    </form>
+}

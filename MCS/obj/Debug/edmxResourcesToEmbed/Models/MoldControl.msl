@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="MoldControlModelStoreContainer" CdmEntityContainer="MoldControlEntities">
+    <EntitySetMapping Name="td_inspection">
+      <EntityTypeMapping TypeName="MoldControlModel.td_inspection">
+        <MappingFragment StoreEntitySet="td_inspection">
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="result" ColumnName="result" />
+          <ScalarProperty Name="inspection_id" ColumnName="inspection_id" />
+          <ScalarProperty Name="cavity_no" ColumnName="cavity_no" />
+          <ScalarProperty Name="mold_code" ColumnName="mold_code" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="td_issue">
+      <EntityTypeMapping TypeName="MoldControlModel.td_issue">
+        <MappingFragment StoreEntitySet="td_issue">
+          <ScalarProperty Name="receive_by" ColumnName="receive_by" />
+          <ScalarProperty Name="date_in" ColumnName="date_in" />
+          <ScalarProperty Name="issue_by" ColumnName="issue_by" />
+          <ScalarProperty Name="appearance" ColumnName="appearance" />
+          <ScalarProperty Name="qty" ColumnName="qty" />
+          <ScalarProperty Name="date_out" ColumnName="date_out" />
+          <ScalarProperty Name="machine_no" ColumnName="machine_no" />
+          <ScalarProperty Name="cavity_no" ColumnName="cavity_no" />
+          <ScalarProperty Name="mold_code" ColumnName="mold_code" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="td_ledger">
+      <EntityTypeMapping TypeName="MoldControlModel.td_ledger">
+        <MappingFragment StoreEntitySet="td_ledger">
+          <ScalarProperty Name="status_id" ColumnName="status_id" />
+          <ScalarProperty Name="create_dt" ColumnName="create_dt" />
+          <ScalarProperty Name="check_by" ColumnName="check_by" />
+          <ScalarProperty Name="pic_mold" ColumnName="pic_mold" />
+          <ScalarProperty Name="pic_code" ColumnName="pic_code" />
+          <ScalarProperty Name="price" ColumnName="price" />
+          <ScalarProperty Name="invoice_no" ColumnName="invoice_no" />
+          <ScalarProperty Name="result" ColumnName="result" />
+          <ScalarProperty Name="source" ColumnName="source" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="qty" ColumnName="qty" />
+          <ScalarProperty Name="receive_date" ColumnName="receive_date" />
+          <ScalarProperty Name="cavity_no" ColumnName="cavity_no" />
+          <ScalarProperty Name="mold_code" ColumnName="mold_code" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="td_mold">
+      <EntityTypeMapping TypeName="MoldControlModel.td_mold">
+        <MappingFragment StoreEntitySet="td_mold">
+          <ScalarProperty Name="update_by" ColumnName="update_by" />
+          <ScalarProperty Name="update_dt" ColumnName="update_dt" />
+          <ScalarProperty Name="create_by" ColumnName="create_by" />
+          <ScalarProperty Name="create_dt" ColumnName="create_dt" />
+          <ScalarProperty Name="unit" ColumnName="unit" />
+          <ScalarProperty Name="mold_diameter" ColumnName="mold_diameter" />
+          <ScalarProperty Name="location" ColumnName="location" />
+          <ScalarProperty Name="item_code" ColumnName="item_code" />
+          <ScalarProperty Name="mold_type" ColumnName="mold_type" />
+          <ScalarProperty Name="mold_code" ColumnName="mold_code" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="td_tran">
+      <EntityTypeMapping TypeName="MoldControlModel.td_tran">
+        <MappingFragment StoreEntitySet="td_tran">
+          <ScalarProperty Name="act_by" ColumnName="act_by" />
+          <ScalarProperty Name="act_dt" ColumnName="act_dt" />
+          <ScalarProperty Name="status_id" ColumnName="status_id" />
+          <ScalarProperty Name="cavity_no" ColumnName="cavity_no" />
+          <ScalarProperty Name="mold_code" ColumnName="mold_code" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tm_inspection">
+      <EntityTypeMapping TypeName="MoldControlModel.tm_inspection">
+        <MappingFragment StoreEntitySet="tm_inspection">
+          <ScalarProperty Name="active" ColumnName="active" />
+          <ScalarProperty Name="inspection_name" ColumnName="inspection_name" />
+          <ScalarProperty Name="inspection_id" ColumnName="inspection_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tm_mold_type">
+      <EntityTypeMapping TypeName="MoldControlModel.tm_mold_type">
+        <MappingFragment StoreEntitySet="tm_mold_type">
+          <ScalarProperty Name="active" ColumnName="active" />
+          <ScalarProperty Name="mold_type_name" ColumnName="mold_type_name" />
+          <ScalarProperty Name="mold_type" ColumnName="mold_type" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tm_status">
+      <EntityTypeMapping TypeName="MoldControlModel.tm_status">
+        <MappingFragment StoreEntitySet="tm_status">
+          <ScalarProperty Name="status_name" ColumnName="status_name" />
+          <ScalarProperty Name="status_id" ColumnName="status_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

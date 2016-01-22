@@ -1,0 +1,96 @@
+﻿@*<form class="form-horizontal" id="formLedger" name="formLedger" method="post" action="@Url.Action("CreateLedger", "Home")" enctype="multipart/form-data">*@
+<div class="form-horizontal">
+    <!-- Text input-->
+    <div class="control-group">
+        <label class="control-label" for="adddate">Date :</label>
+        <div class="controls">
+        <input type="hidden" name="moldcode" value="@ViewBag.mold_code" />
+        <input id="adddate" name="adddate" type="text" class="datepicker input-medium" data-validation="date" data-validation-format="dd/mm/yyyy" placeholder="31/12/2016">
+        </div>
+    </div>
+
+    <!-- Text input-->
+    <div class="control-group">
+        <label class="control-label" for="cavityno">Cavity No. :</label>
+        <div class="controls">
+        <input id="cavityno" name="cavityno" type="text" placeholder="Cavity No." class="input-medium" data-validation="required">
+        </div>
+    </div>
+
+    <!-- Text input-->
+    <div class="control-group">
+        <label class="control-label" for="qty">Q'ty :</label>
+        <div class="controls">
+        <input id="qty" name="qty" type="text" placeholder="Q'ty" class="input-medium" data-validation="number" data-validation-allowing="range[1;100]">
+        </div>
+    </div>
+        
+    <!-- Text input-->
+    <div class="control-group">
+        <label class="control-label" for="invoiceno">Invoice No. :</label>
+        <div class="controls">
+        <input id="invoiceno" name="invoiceno" type="text" placeholder="Invoice No." class="input-medium" data-validation="required">
+        </div>
+    </div>
+
+    <!-- Text input-->
+    <div class="control-group">
+        <label class="control-label" for="price">Price (Yen):</label>
+        <div class="controls">
+        <input id="price" name="price" type="text" placeholder="Price" class="input-medium">
+        </div>
+    </div>
+
+    <!-- Text input-->
+    <div class="control-group">
+        <label class="control-label" for="description">Description :</label>
+        <div class="controls">
+        <input id="description" name="description" type="text" placeholder="Description" class="input-xlarge" data-validation="required">
+        </div>
+    </div>
+
+    <!-- Text input-->
+    <div class="control-group">
+        <label class="control-label" for="source">Source :</label>
+        <div class="controls">
+        <input id="source" name="source" type="text" placeholder="Source" class="input-xlarge" data-validation="required">
+        </div>
+    </div>
+
+    <!-- Text input-->
+    <div class="control-group">
+        <label class="control-label" for="result">Result :</label>
+        <div class="controls">
+        <select id="result" name="result" class="input-small" data-validation="required">
+            <option value="">----</option>
+            <option>OK</option>
+            <option>NG</option>
+        </select>
+        </div>
+    </div>
+
+    <!-- File Button --> 
+    <div class="control-group">
+        <label class="control-label" for="piccode">Picture Mold Code :</label>
+        <div class="controls">
+        <input id="piccode" name="piccode" class="input-file" type="file" data-validation="mime" data-validation-allowing="jpg, png, gif">
+        </div>
+    </div>
+
+    <!-- File Button --> 
+    <div class="control-group">
+        <label class="control-label" for="picmold">Picture Mold :</label>
+        <div class="controls">
+        <input id="picmold" name="picmold" class="input-file" type="file" data-validation="mime" data-validation-allowing="jpg, png, gif">
+        </div>
+    </div>
+
+    <!-- Button (Double) -->
+    <div class="control-group">
+        <label class="control-label" for="btn_submit"></label>
+        <div class="controls">
+        <button id="btn_submit" name="btn_submit" type="submit" class="btn btn-primary">Submit</button>
+        <button id="btn_clear" name="btn_clear" type="reset" class="btn btn-danger">Clear</button>
+        </div>
+    </div>
+</div>

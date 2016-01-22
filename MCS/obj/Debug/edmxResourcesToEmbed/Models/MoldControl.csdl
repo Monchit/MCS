@@ -1,0 +1,212 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MoldControlModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="MoldControlEntities" p1:LazyLoadingEnabled="true">
+    <EntitySet Name="td_inspection" EntityType="MoldControlModel.td_inspection" />
+    <EntitySet Name="td_issue" EntityType="MoldControlModel.td_issue" />
+    <EntitySet Name="td_ledger" EntityType="MoldControlModel.td_ledger" />
+    <EntitySet Name="td_mold" EntityType="MoldControlModel.td_mold" />
+    <EntitySet Name="td_tran" EntityType="MoldControlModel.td_tran" />
+    <EntitySet Name="tm_inspection" EntityType="MoldControlModel.tm_inspection" />
+    <EntitySet Name="tm_mold_type" EntityType="MoldControlModel.tm_mold_type" />
+    <EntitySet Name="tm_status" EntityType="MoldControlModel.tm_status" />
+    <AssociationSet Name="FK_td_inspection_td_ledger" Association="MoldControlModel.FK_td_inspection_td_ledger">
+      <End Role="td_ledger" EntitySet="td_ledger" />
+      <End Role="td_inspection" EntitySet="td_inspection" />
+    </AssociationSet>
+    <AssociationSet Name="FK_td_inspection_tm_inspection" Association="MoldControlModel.FK_td_inspection_tm_inspection">
+      <End Role="tm_inspection" EntitySet="tm_inspection" />
+      <End Role="td_inspection" EntitySet="td_inspection" />
+    </AssociationSet>
+    <AssociationSet Name="FK_td_ledger_td_mold" Association="MoldControlModel.FK_td_ledger_td_mold">
+      <End Role="td_mold" EntitySet="td_mold" />
+      <End Role="td_ledger" EntitySet="td_ledger" />
+    </AssociationSet>
+    <AssociationSet Name="FK_td_mold_tm_mold_type" Association="MoldControlModel.FK_td_mold_tm_mold_type">
+      <End Role="tm_mold_type" EntitySet="tm_mold_type" />
+      <End Role="td_mold" EntitySet="td_mold" />
+    </AssociationSet>
+    <AssociationSet Name="FK_td_tran_tm_status" Association="MoldControlModel.FK_td_tran_tm_status">
+      <End Role="tm_status" EntitySet="tm_status" />
+      <End Role="td_tran" EntitySet="td_tran" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="td_inspection">
+    <Key>
+      <PropertyRef Name="mold_code" />
+      <PropertyRef Name="cavity_no" />
+      <PropertyRef Name="inspection_id" />
+    </Key>
+    <Property Type="String" Name="mold_code" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="cavity_no" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="Byte" Name="inspection_id" Nullable="false" />
+    <Property Type="Boolean" Name="result" Nullable="false" />
+    <Property Type="String" Name="description" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="td_ledger" Relationship="MoldControlModel.FK_td_inspection_td_ledger" FromRole="td_inspection" ToRole="td_ledger" />
+    <NavigationProperty Name="tm_inspection" Relationship="MoldControlModel.FK_td_inspection_tm_inspection" FromRole="td_inspection" ToRole="tm_inspection" />
+  </EntityType>
+  <EntityType Name="td_issue">
+    <Key>
+      <PropertyRef Name="mold_code" />
+      <PropertyRef Name="cavity_no" />
+      <PropertyRef Name="machine_no" />
+    </Key>
+    <Property Type="String" Name="mold_code" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="cavity_no" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="machine_no" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="DateTime" Name="date_out" Precision="0" />
+    <Property Type="Int32" Name="qty" />
+    <Property Type="String" Name="appearance" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="issue_by" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Type="DateTime" Name="date_in" Precision="0" />
+    <Property Type="String" Name="receive_by" MaxLength="10" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="td_ledger">
+    <Key>
+      <PropertyRef Name="mold_code" />
+      <PropertyRef Name="cavity_no" />
+    </Key>
+    <Property Type="String" Name="mold_code" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="cavity_no" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="DateTime" Name="receive_date" Nullable="false" Precision="3" />
+    <Property Type="Int32" Name="qty" Nullable="false" />
+    <Property Type="String" Name="description" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="source" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="result" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="invoice_no" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="price" />
+    <Property Type="String" Name="pic_code" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="pic_mold" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="check_by" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="DateTime" Name="create_dt" Nullable="false" Precision="3" />
+    <Property Type="Byte" Name="status_id" Nullable="false" />
+    <NavigationProperty Name="td_inspection" Relationship="MoldControlModel.FK_td_inspection_td_ledger" FromRole="td_ledger" ToRole="td_inspection" />
+    <NavigationProperty Name="td_mold" Relationship="MoldControlModel.FK_td_ledger_td_mold" FromRole="td_ledger" ToRole="td_mold" />
+  </EntityType>
+  <EntityType Name="td_mold">
+    <Key>
+      <PropertyRef Name="mold_code" />
+    </Key>
+    <Property Type="String" Name="mold_code" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="Byte" Name="mold_type" Nullable="false" />
+    <Property Type="String" Name="item_code" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="location" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="mold_diameter" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="unit" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Type="DateTime" Name="create_dt" Nullable="false" Precision="3" />
+    <Property Type="String" Name="create_by" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Type="DateTime" Name="update_dt" Precision="3" />
+    <Property Type="String" Name="update_by" MaxLength="10" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="td_ledger" Relationship="MoldControlModel.FK_td_ledger_td_mold" FromRole="td_mold" ToRole="td_ledger" />
+    <NavigationProperty Name="tm_mold_type" Relationship="MoldControlModel.FK_td_mold_tm_mold_type" FromRole="td_mold" ToRole="tm_mold_type" />
+  </EntityType>
+  <EntityType Name="td_tran">
+    <Key>
+      <PropertyRef Name="mold_code" />
+      <PropertyRef Name="cavity_no" />
+    </Key>
+    <Property Type="String" Name="mold_code" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="cavity_no" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Type="Byte" Name="status_id" Nullable="false" />
+    <Property Type="DateTime" Name="act_dt" Nullable="false" Precision="3" />
+    <Property Type="String" Name="act_by" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="tm_status" Relationship="MoldControlModel.FK_td_tran_tm_status" FromRole="td_tran" ToRole="tm_status" />
+  </EntityType>
+  <EntityType Name="tm_inspection">
+    <Key>
+      <PropertyRef Name="inspection_id" />
+    </Key>
+    <Property Type="Byte" Name="inspection_id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="inspection_name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="Boolean" Name="active" Nullable="false" />
+    <NavigationProperty Name="td_inspection" Relationship="MoldControlModel.FK_td_inspection_tm_inspection" FromRole="tm_inspection" ToRole="td_inspection" />
+  </EntityType>
+  <EntityType Name="tm_mold_type">
+    <Key>
+      <PropertyRef Name="mold_type" />
+    </Key>
+    <Property Type="Byte" Name="mold_type" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="mold_type_name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="Boolean" Name="active" Nullable="false" />
+    <NavigationProperty Name="td_mold" Relationship="MoldControlModel.FK_td_mold_tm_mold_type" FromRole="tm_mold_type" ToRole="td_mold" />
+  </EntityType>
+  <EntityType Name="tm_status">
+    <Key>
+      <PropertyRef Name="status_id" />
+    </Key>
+    <Property Type="Byte" Name="status_id" Nullable="false" />
+    <Property Type="String" Name="status_name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="td_tran" Relationship="MoldControlModel.FK_td_tran_tm_status" FromRole="tm_status" ToRole="td_tran" />
+  </EntityType>
+  <Association Name="FK_td_inspection_td_ledger">
+    <End Type="MoldControlModel.td_ledger" Role="td_ledger" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="MoldControlModel.td_inspection" Role="td_inspection" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="td_ledger">
+        <PropertyRef Name="mold_code" />
+        <PropertyRef Name="cavity_no" />
+      </Principal>
+      <Dependent Role="td_inspection">
+        <PropertyRef Name="mold_code" />
+        <PropertyRef Name="cavity_no" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_td_inspection_tm_inspection">
+    <End Type="MoldControlModel.tm_inspection" Role="tm_inspection" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="MoldControlModel.td_inspection" Role="td_inspection" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tm_inspection">
+        <PropertyRef Name="inspection_id" />
+      </Principal>
+      <Dependent Role="td_inspection">
+        <PropertyRef Name="inspection_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_td_ledger_td_mold">
+    <End Type="MoldControlModel.td_mold" Role="td_mold" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="MoldControlModel.td_ledger" Role="td_ledger" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="td_mold">
+        <PropertyRef Name="mold_code" />
+      </Principal>
+      <Dependent Role="td_ledger">
+        <PropertyRef Name="mold_code" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_td_mold_tm_mold_type">
+    <End Type="MoldControlModel.tm_mold_type" Role="tm_mold_type" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="MoldControlModel.td_mold" Role="td_mold" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tm_mold_type">
+        <PropertyRef Name="mold_type" />
+      </Principal>
+      <Dependent Role="td_mold">
+        <PropertyRef Name="mold_type" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_td_tran_tm_status">
+    <End Type="MoldControlModel.tm_status" Role="tm_status" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="MoldControlModel.td_tran" Role="td_tran" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tm_status">
+        <PropertyRef Name="status_id" />
+      </Principal>
+      <Dependent Role="td_tran">
+        <PropertyRef Name="status_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
